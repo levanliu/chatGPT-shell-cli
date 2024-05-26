@@ -15,7 +15,7 @@
 #### install:
 ```
     git clone https://github.com/levanliu/chatgpt-shell-cli.git
-    cd chatgpt
+    cd chatgpt-shell-cli
     sudo bash install.sh
 ```
 #### Usage:
