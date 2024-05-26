@@ -16,8 +16,7 @@
 ```
     git clone https://github.com/levanliu/chatgpt-shell-cli.git
     cd chatgpt
-    sudo -i
-    ./install.sh
+    sudo bash install.sh
 ```
 #### Usage:
 Chat Mode:
