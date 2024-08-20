@@ -1,4 +1,4 @@
-### ChatGpt in terminal (free)
+### ChatGpt-4o-mini in terminal (free)
 
 #### dependencies:
 ```
