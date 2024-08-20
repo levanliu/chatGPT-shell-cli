@@ -2,9 +2,9 @@
 
 GLOBIGNORE="*"
 
-CHAT_INIT_PROMPT="You are ChatGPT, a Large Language Model trained by OpenAI. You will be answering questions from users. You answer as concisely as possible for each response (e.g. don’t be verbose). If you are generating a list, do not have too many items. Keep the number of items short. Before each user prompt you will be given the chat history in Q&A form. Output your answer directly, with no labels in front. Do not start your answers with A or Anwser. You were trained on data up until 2021. Today's date is $(date +%m/%d/%Y)"
+CHAT_INIT_PROMPT="You are ChatGPT, a Large Language Model trained by OpenAI. You will be answering questions from users. You answer as concisely as possible for each response (e.g. don’t be verbose). If you are generating a list, do not have too many items. Keep the number of items short. Before each user prompt you will be given the chat history in Q&A form. Output your answer directly, with no labels in front. Do not start your answers with A or Anwser. Today's date is $(date +%m/%d/%Y)"
 
-SYSTEM_PROMPT="You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Current date: $(date +%m/%d/%Y). Knowledge cutoff: 9/1/2021."
+SYSTEM_PROMPT="You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Current date: $(date +%m/%d/%Y)."
 
 COMMAND_GENERATION_PROMPT="You are a Command Line Interface expert and your task is to provide functioning shell commands. Return a CLI command and nothing else - do not send it in a code block, quotes, or anything else, just the pure text CONTAINING ONLY THE COMMAND. If possible, return a one-line bash command or chain many commands together. Return ONLY the command ready to run in the terminal. The command should do the following:"
 
@@ -24,7 +24,7 @@ A simple, lightweight shell script to use OpenAI's Language Models and DALL-E fr
 
 https://github.com/0xacx/chatGPT-shell-cli/
 
-By default the script uses the "gpt-3.5-turbo" model. It will upgrade to "gpt-4" when the API is accessible to anyone.
+By default the script uses the "gpt-4o-mini" model. It will upgrade to "gpt-4" when the API is accessible to anyone.
 
 Commands:
   image: - To generate images, start a prompt with image: If you are using iTerm, you can view the image directly in the terminal. Otherwise the script will ask to open the image in your browser.
@@ -58,7 +58,7 @@ Options:
                              OpenAI API are 256x256, 512x512, 1024x1024)
 
   -c, --chat-context         For models that do not support chat context by
-                             default (all models except gpt-3.5-turbo and
+                             default (all models except gpt-4o-mini and
                              gpt-4), you can enable chat context, for the
                              model to remember your previous questions and
                              its previous answers. It also makes models
@@ -81,7 +81,7 @@ handle_error() {
 # request to openAI API models endpoint. Returns a list of models
 # takes no input parameters
 list_models() {
-	models_response=$(curl https://api.chatanywhere.tech/v1/models \
+	models_response=$(curl https://api.chatanywhere.com.cn/v1/models \
 		-sS \
 		-H "Authorization: Bearer $OPENAI_KEY")
 	handle_error "$models_response"
@@ -94,7 +94,7 @@ list_models() {
 request_to_completions() {
 	local prompt="$1"
 
-	curl https://api.chatanywhere.tech/v1/completions \
+	curl https://api.chatanywhere.com.cn/v1/completions \
 		-sS \
 		-H 'Content-Type: application/json' \
 		-H "Authorization: Bearer $OPENAI_KEY" \
@@ -110,7 +110,7 @@ request_to_completions() {
 # $1 should be the prompt
 request_to_image() {
 	local prompt="$1"
-	image_response=$(curl https://api.chatanywhere.tech/v1/images/generations \
+	image_response=$(curl https://api.chatanywhere.com.cn/v1/images/generations \
 		-sS \
 		-H 'Content-Type: application/json' \
 		-H "Authorization: Bearer $OPENAI_KEY" \
@@ -127,7 +127,7 @@ request_to_chat() {
 	local message="$1"
 	escaped_system_prompt=$(escape "$SYSTEM_PROMPT")
 	
-	curl https://api.chatanywhere.tech/v1/chat/completions \
+	curl https://api.chatanywhere.com.cn/v1/chat/completions \
 		-sS \
 		-H 'Content-Type: application/json' \
 		-H "Authorization: Bearer $OPENAI_KEY" \
@@ -284,8 +284,8 @@ done
 
 # set defaults
 TEMPERATURE=${TEMPERATURE:-0.7}
-MAX_TOKENS=${MAX_TOKENS:-1024}
-MODEL=${MODEL:-gpt-3.5-turbo}
+MAX_TOKENS=${MAX_TOKENS:-4096}
+MODEL=${MODEL:-gpt-4o-mini}
 SIZE=${SIZE:-512x512}
 CONTEXT=${CONTEXT:-false}
 MULTI_LINE_PROMPT=${MULTI_LINE_PROMPT:-false}
@@ -367,7 +367,7 @@ while $running; do
 	elif [[ "$prompt" == "models" ]]; then
 		list_models
 	elif [[ "$prompt" =~ ^model: ]]; then
-		models_response=$(curl https://api.chatanywhere.tech/v1/models \
+		models_response=$(curl https://api.chatanywhere.com.cn/v1/models \
 			-sS \
 			-H "Authorization: Bearer $OPENAI_KEY")
 		handle_error "$models_response"
