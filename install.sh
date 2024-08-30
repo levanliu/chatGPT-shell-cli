@@ -28,10 +28,10 @@ cp chatgpt.sh /usr/local/bin/chat
 
 # Replace open image command with xdg-open for linux systems
 if [[ "$OSTYPE" == "linux"* ]] || [[ "$OSTYPE" == "freebsd"* ]]; then
-  sed -i 's/open "\${image_url}"/xdg-open "\${image_url}"/g' '/usr/local/bin/chatgpt'
+  sed -i 's/open "\${image_url}"/xdg-open "\${image_url}"/g' '/usr/local/bin/chat'
 fi
-chmod +x /usr/local/bin/chatgpt
-echo "Installed chatgpt script to /usr/local/bin/chatgpt"
+chmod +x /usr/local/bin/chat
+echo "Installed chatgpt script to /usr/local/bin/chat"
 
 echo "The script will add the OPENAI_KEY environment variable to your shell profile and add /usr/local/bin to your PATH"
 echo "Would you like to continue? (Yes/No)"
